@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "User": {
+      "title": "Staff User",
+      "description": "Hospital staff member",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "doctor", "receptionist", "nurse"] },
+        "photoURL": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "Patient record",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "contact": { "type": "string" },
+        "medicalHistory": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "age", "gender"]
+    },
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Doctor profile",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "specialization": { "type": "string" },
+        "schedule": { "type": "string" },
+        "experience": { "type": "string" },
+        "email": { "type": "string" }
+      },
+      "required": ["name", "specialization"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Appointment record",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "dateTime": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["scheduled", "completed", "cancelled"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["patientId", "doctorId", "dateTime", "status"]
+    },
+    "Bill": {
+      "title": "Bill",
+      "description": "Treatment bill",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "description": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["paid", "unpaid"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["patientId", "amount", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Staff user data"
+    },
+    "/patients/{patientId}": {
+      "schema": "Patient",
+      "description": "Patient records"
+    },
+    "/doctors/{doctorId}": {
+      "schema": "Doctor",
+      "description": "Doctor profiles"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Appointment records"
+    },
+    "/billing/{billId}": {
+      "schema": "Bill",
+      "description": "Billing records"
+    }
+  }
+}
